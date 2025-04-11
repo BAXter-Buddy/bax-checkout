@@ -1,0 +1,17 @@
+
+body {
+  background-color: black;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 100px;
+}
+button {
+  padding: 12px 25px;
+  background-color: orange;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
