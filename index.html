@@ -2,41 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BAX Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BAX Hat Checkout</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
   <style>
     body {
-      background-color: #000;
+      background-color: black;
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding-top: 50px;
+      padding-top: 100px;
     }
     button {
-      padding: 12px 20px;
-      font-size: 16px;
-      margin-top: 20px;
       background-color: orange;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
       color: black;
       font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ffaa00;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 </head>
 <body>
 
   <button id="connectWalletButton">Connect MetaMask</button>
-
-  <h1 id="itemName">Loading item...</h1>
-  <h2 id="priceTag">BAX —</h2>
-
-  <button id="buyBtn">Confirm & Pay — BAX</button>
+  <h2 id="itemName" style="margin-top: 40px;">Loading item...</h2>
+  <h3 id="itemPrice">BAX --</h3>
+  <button id="buyBtn">Confirm & Pay -- BAX</button>
 
   <script>
-    // MetaMask connect
+    // Connect Wallet
     async function connectWallet() {
       if (typeof window.ethereum !== 'undefined') {
         try {
@@ -44,32 +45,25 @@
           const account = accounts[0];
           document.getElementById('connectWalletButton').innerText = 'Wallet Connected';
           document.getElementById('connectWalletButton').disabled = true;
-        } catch (err) {
-          console.error(err);
+        } catch (error) {
+          console.error(error);
           alert('Connection failed.');
         }
       } else {
-        alert('MetaMask is not installed. Please install it.');
+        alert('MetaMask is not installed. Please install the MetaMask extension!');
       }
     }
 
     document.getElementById('connectWalletButton').addEventListener('click', connectWallet);
 
-    // Parse URL for item and price
+    // Inject dynamic content from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const itemSlug = urlParams.get('item') || 'unknown-item';
+    const item = urlParams.get('item') || 'Unknown Item';
     const price = urlParams.get('price') || '0';
 
-    // Format slug → readable name
-    const readableName = itemSlug
-      .replace(/-/g, ' ')
-      .replace(/\b\w/g, char => char.toUpperCase());
-
-    // Update UI
-    document.getElementById('itemName').innerText = `${readableName} — APE IN`;
-    document.getElementById('priceTag').innerText = `BAX ${price}`;
+    document.getElementById('itemName').innerText = `${item} — APE IN`;
+    document.getElementById('itemPrice').innerText = `BAX ${price}`;
     document.getElementById('buyBtn').innerText = `Confirm & Pay ${price} BAX`;
   </script>
-
 </body>
 </html>
